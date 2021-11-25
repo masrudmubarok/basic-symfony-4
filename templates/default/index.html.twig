@@ -16,5 +16,18 @@
         <li>Your controller at <code><a href="{{ '/var/www/udemy/symfony4/learn-symfony-4/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/var/www/udemy/symfony4/learn-symfony-4/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
+
+    <ul>
+        {% for user in users %}
+        <li>{{user}}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
+
+{# Create for alert  using javascript #}
+{# {% block javascripts %}
+    <script>
+        alert("{{ controller_name }}");
+    </script>
+{% endblock %} #}
