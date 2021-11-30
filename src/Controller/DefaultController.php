@@ -72,13 +72,22 @@ class DefaultController extends AbstractController
         // exit($request->cookies->get('PHPSESSID'));
 
         # Session
-        $session->set('name', 'session value');
+        // $session->set('name', 'session value');
         // $session->remove('name');  # Remove session data that only 'name'
         // $session->clear();  # Remove all session data
-        if($session->has('name')) 
-        {
-            exit($session->get('name'));
-        }
+        // if($session->has('name')) 
+        // {
+        //     exit($session->get('name'));
+        // }
+
+        # GET POST Data
+        // exit($request->query->get('page', 'default'));
+
+        # GET POST Dat (display server name)
+        exit($request->server->get('HTTP_HOST'));
+        $request->isXmlHttpRequest();  // is it an Ajax request?
+        $request->request->get('page');
+        $request->files->get('foo'); // Upload html file, foo HTML file element
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
