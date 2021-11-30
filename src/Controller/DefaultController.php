@@ -7,6 +7,7 @@ use App\Services\GiftsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class DefaultController extends AbstractController
 {
@@ -38,6 +39,23 @@ class DefaultController extends AbstractController
         # Read users form Sqlite database
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        # Coockie (create)
+        // $cookie = new Cookie(
+        //     'my_cookie',  // Cookie name
+        //     'cookie_value',  // Cookie value
+        //     time() + ( 2 * 365 * 24 * 60 * 60)  // Expires after 2 years
+        // );
+
+        // $res = new Response();
+        // $res->headers->setCookie($cookie);
+        // $res->send();
+
+        # Cookie (clear)
+        // $res = new Response();
+        // $res->headers->clearCookie('my_cookie');
+        // $res->send();
+
+        # Flash Messages
         $this->addFlash(
             'notice',
             'Your changes were saved!'
