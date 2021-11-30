@@ -38,6 +38,16 @@ class DefaultController extends AbstractController
         # Read users form Sqlite database
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        $this->addFlash(
+            'notice',
+            'Your changes were saved!'
+        );
+
+        $this->addFlash(
+            'warning',
+            'Your changes were saved!'
+        );
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'users' => $users,
