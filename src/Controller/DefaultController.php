@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\GiftsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DefaultController extends AbstractController
 {
@@ -21,7 +23,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="default")
      */
-    public function index(GiftsService $gifts)
+    public function index(GiftsService $gifts, SessionInterface $session, Request $request)
     {
         # Users array
         // $users = ['Masrud','Mubarok'];
@@ -39,6 +41,17 @@ class DefaultController extends AbstractController
         # Read users form Sqlite database
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        # Flash Messages
+        $this->addFlash(
+            'notice',
+            'Your changes were saved!'
+        );
+
+        $this->addFlash(
+            'warning',
+            'Your changes were saved!'
+        );
+
         # Coockie (create)
         // $cookie = new Cookie(
         //     'my_cookie',  // Cookie name
@@ -55,16 +68,17 @@ class DefaultController extends AbstractController
         // $res->headers->clearCookie('my_cookie');
         // $res->send();
 
-        # Flash Messages
-        $this->addFlash(
-            'notice',
-            'Your changes were saved!'
-        );
+        # Get data from cookies
+        // exit($request->cookies->get('PHPSESSID'));
 
-        $this->addFlash(
-            'warning',
-            'Your changes were saved!'
-        );
+        # Session
+        $session->set('name', 'session value');
+        // $session->remove('name');  # Remove session data that only 'name'
+        // $session->clear();  # Remove all session data
+        if($session->has('name')) 
+        {
+            exit($session->get('name'));
+        }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
