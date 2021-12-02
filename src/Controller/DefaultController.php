@@ -21,6 +21,12 @@ class DefaultController extends AbstractController
     //     $gifts->gifts = ['a','b','c'];
     // }
 
+    # Binding Services (logger) to Controllers
+    public function __construct($logger)
+    {
+        // use service logger
+    }
+
     /**
      * @Route("/", name="default")
      */
@@ -43,15 +49,15 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         # Flash Messages
-        $this->addFlash(
-            'notice',
-            'Your changes were saved!'
-        );
+        // $this->addFlash(
+        //     'notice',
+        //     'Your changes were saved!'
+        // );
 
-        $this->addFlash(
-            'warning',
-            'Your changes were saved!'
-        );
+        // $this->addFlash(
+        //     'warning',
+        //     'Your changes were saved!'
+        // );
 
         # Coockie (create)
         // $cookie = new Cookie(
@@ -91,10 +97,10 @@ class DefaultController extends AbstractController
         // $request->files->get('foo'); // Upload html file, foo HTML file element
 
         # Handling Exceptions
-        if($users) 
-        {
-            throw $this->createNotFoundException('The users do not exist');
-        }
+        // if($users) 
+        // {
+        //     throw $this->createNotFoundException('The users do not exist');
+        // }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
