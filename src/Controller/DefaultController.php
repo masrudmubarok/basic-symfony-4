@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends AbstractController
 {
@@ -83,11 +84,17 @@ class DefaultController extends AbstractController
         # GET POST Data
         // exit($request->query->get('page', 'default'));
 
-        # GET POST Dat (display server name)
-        exit($request->server->get('HTTP_HOST'));
-        $request->isXmlHttpRequest();  // is it an Ajax request?
-        $request->request->get('page');
-        $request->files->get('foo'); // Upload html file, foo HTML file element
+        # GET POST Data (display server name)
+        // exit($request->server->get('HTTP_HOST'));
+        // $request->isXmlHttpRequest();  // is it an Ajax request?
+        // $request->request->get('page');
+        // $request->files->get('foo'); // Upload html file, foo HTML file element
+
+        # Handling Exceptions
+        if($users) 
+        {
+            throw $this->createNotFoundException('The users do not exist');
+        }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
