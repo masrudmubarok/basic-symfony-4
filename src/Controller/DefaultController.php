@@ -101,11 +101,11 @@ class DefaultController extends AbstractController
         // }
 
         # Read users form Sqlite database
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        // $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'users' => $users,
+            // 'users' => $users,
             'random_gift' => $gifts->gifts,
         ]);
         
