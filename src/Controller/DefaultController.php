@@ -29,7 +29,7 @@ class DefaultController extends AbstractController
     // }
 
     /**
-     * @Route("/", name="default")
+     * @Route("/home", name="default", name="home")
      */
     public function index(GiftsService $gifts, SessionInterface $session, Request $request)
     {

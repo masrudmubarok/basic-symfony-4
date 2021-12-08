@@ -2,6 +2,7 @@
 
 {% block title %}Hello {{controller_name}}!{% endblock %}
 {% set users = [{name: 'John'}, {name: 'Susan'}, {name: 'Robert'}] %}
+{% set string = "some string \n from \n database"%}
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -24,12 +25,16 @@
         No users where found
         {% endfor %}
     </ul>
-    {{ include('includes/subview.html.twig', {'users': users}) }}
-    {% for i in 1..10 %}
+
+    {# Include Function #}
+    {{ include('includes/subview.html.twig', {'users': users}) }} <br>
+    
+    {# Cycle Function #}
+    {# {% for i in 1..10 %}
     <div class="{{ cycle(['even', 'odd'], i) }}">
     {{ i }}
     </div> 
-    {% endfor %}
+    {% endfor %} #}
 
     {# Flash Messages #}
     {% for message in app.flashes('notice') %}
@@ -46,13 +51,34 @@
         {% endfor %}
     {% endfor %}
 
+    {# Path Function #}
+    {{ path('home') }} <br>
+    {{ url('home') }} <br>
+    {{ asset('images/logo.png') }} <br>
+    {{ absolute_url(asset('images/logo.png')) }} <br>
+    
+    {# Image Load #}
+    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony 4 course" />
+
+    {# string escape html filter #}
+    {{ string|escape('html') }}
+
 </div>
 {% endblock %}
 
 {# Create for alert  using javascript #}
 {% block javascripts %}
-{{ parent() }}
+
+{# Parent Function #}
+{# {{ parent() }}
     <script>
         alert(2);
-    </script>
+    </script> #}
+
+{# Assign Variable Set Above | escape('js') filter #}
+<script>
+var route = "{{ string|escape('js') }}";
+{# alert(route); #}
+</script>
+
 {% endblock %}
