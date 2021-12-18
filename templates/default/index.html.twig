@@ -66,6 +66,12 @@
     {# Global Variables #}
     <p>The google tracking code is: {{ ga_code }}</p>
 
+    {# using app variable #}
+    {{app.user}}
+    {{app.request.get('param')}}
+    {{app.environment}}
+    {{dump(app.session)}}
+
 </div>
 {% endblock %}
 
