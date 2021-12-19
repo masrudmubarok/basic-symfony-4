@@ -103,6 +103,16 @@ class DefaultController extends AbstractController
         # Read users form Sqlite database
         // $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        # Doctrine crud - create
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $user = new User();
+        $user->setName('Masrud');
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        dump('A new user was saved with the id of '. $user->getId());
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             // 'users' => $users,
