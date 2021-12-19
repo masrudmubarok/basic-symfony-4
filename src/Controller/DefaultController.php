@@ -202,4 +202,13 @@ class DefaultController extends AbstractController
     {
         exit('Test controller forwarding - '.$param);
     }
+
+    public function mostPopularPosts($number = 3)
+    {
+        // database call;
+        $posts = ['post1','post2','post3','post4'];
+        return $this->render('default/most_popular_posts.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
 }

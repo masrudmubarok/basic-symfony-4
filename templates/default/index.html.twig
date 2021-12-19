@@ -72,6 +72,12 @@
     {{app.environment}}
     {{dump(app.session)}}
 
+    {# embed controller in view (rendering controller in symfony) #}
+    {{render(controller(
+        'App\\Controller\\DefaultController::mostPopularPosts',
+        { 'number': 5 }
+    ))}}
+
 </div>
 {% endblock %}
 
