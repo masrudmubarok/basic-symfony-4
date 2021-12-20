@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Services\GiftsService;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -123,17 +124,28 @@ class DefaultController extends AbstractController
         // dump($user);
 
         # Doctrine crud - update
+        // $entityManager = $this->getDoctrine()->getManager();
+
+        // $id = 11;
+        // $user = $entityManager->getRepository(User::class)->find($id);
+
+        // if (!$user) {
+        //     throw $this->createNotFoundException(
+        //         'No user found for id '.$id
+        //     );
+        // }
+        // $user->setName('New Masrud');
+        // $entityManager->flush();
+
+        // dump($user);
+
+        # Doctrine crud - delete
         $entityManager = $this->getDoctrine()->getManager();
 
-        $id = 11;
+        $id = 12;
         $user = $entityManager->getRepository(User::class)->find($id);
 
-        if (!$user) {
-            throw $this->createNotFoundException(
-                'No user found for id '.$id
-            );
-        }
-        $user->setName('New Masrud');
+        $entityManager->remove($user);
         $entityManager->flush();
 
         dump($user);
