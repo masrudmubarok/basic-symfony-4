@@ -151,17 +151,13 @@ class DefaultController extends AbstractController
         // dump($user);
 
         # Doctrine raw queries
-        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(User::class);
 
-        $conn = $entityManager->getConnection();
-        $sql = '
-        SELECT * FROM user u
-        WHERE u.id > :id
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => 11]);
+        $query = $repository->createQueryBuilder('u')
+            ->getQuery();
 
-        dump($stmt->fetchAll());
+        $user = $query->getResult();
+        dump($user);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
