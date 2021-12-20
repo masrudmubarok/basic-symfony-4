@@ -114,12 +114,28 @@ class DefaultController extends AbstractController
         // dump('A new user was saved with the id of '. $user->getId());
 
         # Doctrine crud - read
-        $repository = $this->getDoctrine()->getRepository(User::class);
-        // $user = $repository->find(5);
-        // $user = $repository->findOneBy(['name' => 'Masrud']);
-        // $user = $repository->findOneBy(['name' => 'Masrud', 'id' => 10]);
-        // $user = $repository->findBy(['name' => 'Masrud'],['id' => 'DESC']);
-        $user = $repository->findAll();
+        // $repository = $this->getDoctrine()->getRepository(User::class);
+        // // $user = $repository->find(5);
+        // // $user = $repository->findOneBy(['name' => 'Masrud']);
+        // // $user = $repository->findOneBy(['name' => 'Masrud', 'id' => 10]);
+        // // $user = $repository->findBy(['name' => 'Masrud'],['id' => 'DESC']);
+        // $user = $repository->findAll();
+        // dump($user);
+
+        # Doctrine crud - update
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $id = 11;
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+        $user->setName('New Masrud');
+        $entityManager->flush();
+
         dump($user);
 
         return $this->render('default/index.html.twig', [
