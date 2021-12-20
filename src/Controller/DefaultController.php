@@ -30,9 +30,9 @@ class DefaultController extends AbstractController
     // }
 
     /**
-     * @Route("/home", name="default", name="home")
+     * @Route("/home/{id}", name="default", name="home")
      */
-    public function index(GiftsService $gifts, SessionInterface $session, Request $request)
+    public function index(GiftsService $gifts, SessionInterface $session, Request $request, User $user)
     {
         # Users array
         // $users = ['Masrud','Mubarok'];
@@ -151,25 +151,28 @@ class DefaultController extends AbstractController
         // dump($user);
 
         # Doctrine raw queries
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
 
-        $conn = $entityManager->getConnection();
-        $sql = '
-        SELECT * FROM user u
-        WHERE u.id > :id
-        ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => 3]);
+        // $conn = $entityManager->getConnection();
+        // $sql = '
+        // SELECT * FROM user u
+        // WHERE u.id > :id
+        // ';
+        // $stmt = $conn->prepare($sql);
+        // $stmt->execute(['id' => 3]);
 
-        dump($stmt->fetchAll());
+        // dump($stmt->fetchAll());
 
         # Doctrine query builder
-        $repository = $this->getDoctrine()->getRepository(User::class);
+        // $repository = $this->getDoctrine()->getRepository(User::class);
 
-        $query = $repository->createQueryBuilder('u')
-            ->getQuery();
+        // $query = $repository->createQueryBuilder('u')
+        //     ->getQuery();
 
-        $user = $query->getResult();
+        // $user = $query->getResult();
+        // dump($user);
+
+        # Doctrine param converter
         dump($user);
 
         return $this->render('default/index.html.twig', [
