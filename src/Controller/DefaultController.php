@@ -30,9 +30,9 @@ class DefaultController extends AbstractController
     // }
 
     /**
-     * @Route("/home/{id}", name="default", name="home")
+     * @Route("/home", name="default", name="home")
      */
-    public function index(GiftsService $gifts, SessionInterface $session, Request $request, User $user)
+    public function index(GiftsService $gifts, SessionInterface $session, Request $request)
     {
         # Users array
         // $users = ['Masrud','Mubarok'];
@@ -173,7 +173,14 @@ class DefaultController extends AbstractController
         // dump($user);
 
         # Doctrine param converter
-        dump($user);
+        // dump($user);
+
+        # Doctrine LifecycleCallbacks
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = new User();
+        $user->setName('Samrud');
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
