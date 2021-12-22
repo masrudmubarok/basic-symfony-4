@@ -47,6 +47,8 @@ class DefaultController extends AbstractController
         // $entityManager->persist($user2);
         // exit($entityManager->flush());
 
+        # Testing commit s
+
         # Flash Messages
         // $this->addFlash(
         //     'notice',
