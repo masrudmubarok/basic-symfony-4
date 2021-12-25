@@ -24,11 +24,13 @@ class DefaultController extends AbstractController
     //     $gifts->gifts = ['a','b','c'];
     // }
 
+
     # Binding Services (logger) to Controllers
     // public function __construct($logger)
     // {
     //     // use service logger
     // }
+
 
     /**
      * @Route("/home", name="default", name="home")
@@ -37,6 +39,7 @@ class DefaultController extends AbstractController
     {
         # Users array
         // $users = ['Masrud','Mubarok'];
+
 
         # Insert users to database
         // $entityManager = $this->getDoctrine()->getManager();
@@ -48,7 +51,6 @@ class DefaultController extends AbstractController
         // $entityManager->persist($user2);
         // exit($entityManager->flush());
 
-        # Testing commit s
 
         # Flash Messages
         // $this->addFlash(
@@ -61,6 +63,7 @@ class DefaultController extends AbstractController
         //     'Your changes were saved!'
         // );
 
+
         # Coockie (create)
         // $cookie = new Cookie(
         //     'my_cookie',  // Cookie name
@@ -72,13 +75,16 @@ class DefaultController extends AbstractController
         // $res->headers->setCookie($cookie);
         // $res->send();
 
+
         # Cookie (clear)
         // $res = new Response();
         // $res->headers->clearCookie('my_cookie');
         // $res->send();
 
+
         # Get data from cookies
         // exit($request->cookies->get('PHPSESSID'));
+
 
         # Session
         // $session->set('name', 'session value');
@@ -89,8 +95,10 @@ class DefaultController extends AbstractController
         //     exit($session->get('name'));
         // }
 
+
         # GET POST Data
         // exit($request->query->get('page', 'default'));
+
 
         # GET POST Data (display server name)
         // exit($request->server->get('HTTP_HOST'));
@@ -98,14 +106,17 @@ class DefaultController extends AbstractController
         // $request->request->get('page');
         // $request->files->get('foo'); // Upload html file, foo HTML file element
 
+
         # Handling Exceptions
         // if($users) 
         // {
         //     throw $this->createNotFoundException('The users do not exist');
         // }
 
+
         # Read users form Sqlite database
         // $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+
 
         # Doctrine crud - create
         // $entityManager = $this->getDoctrine()->getManager();
@@ -117,6 +128,7 @@ class DefaultController extends AbstractController
 
         // dump('A new user was saved with the id of '. $user->getId());
 
+
         # Doctrine crud - read
         // $repository = $this->getDoctrine()->getRepository(User::class);
         // // $user = $repository->find(5);
@@ -125,6 +137,7 @@ class DefaultController extends AbstractController
         // // $user = $repository->findBy(['name' => 'Masrud'],['id' => 'DESC']);
         // $user = $repository->findAll();
         // dump($user);
+
 
         # Doctrine crud - update
         // $entityManager = $this->getDoctrine()->getManager();
@@ -142,6 +155,7 @@ class DefaultController extends AbstractController
 
         // dump($user);
 
+
         # Doctrine crud - delete
         // $entityManager = $this->getDoctrine()->getManager();
 
@@ -152,6 +166,7 @@ class DefaultController extends AbstractController
         // $entityManager->flush();
 
         // dump($user);
+
 
         # Doctrine raw queries
         // $entityManager = $this->getDoctrine()->getManager();
@@ -166,6 +181,7 @@ class DefaultController extends AbstractController
 
         // dump($stmt->fetchAll());
 
+
         # Doctrine query builder
         // $repository = $this->getDoctrine()->getRepository(User::class);
 
@@ -175,8 +191,10 @@ class DefaultController extends AbstractController
         // $user = $query->getResult();
         // dump($user);
 
+
         # Doctrine param converter
         // dump($user);
+
 
         # Doctrine LifecycleCallbacks
         // $entityManager = $this->getDoctrine()->getManager();
@@ -185,9 +203,10 @@ class DefaultController extends AbstractController
         // $entityManager->persist($user);
         // $entityManager->flush();
 
+        
         # Doctrine one-to-many & many-to-one relationships
         $entityManager = $this->getDoctrine()->getManager();
-        
+
         #/ Insert data user including video
         $user = new User();
         $user->setName('Joko');
