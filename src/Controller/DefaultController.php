@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Video;
 use App\Services\GiftsService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -178,11 +179,48 @@ class DefaultController extends AbstractController
         // dump($user);
 
         # Doctrine LifecycleCallbacks
+        // $entityManager = $this->getDoctrine()->getManager();
+        // $user = new User();
+        // $user->setName('Samrud');
+        // $entityManager->persist($user);
+        // $entityManager->flush();
+
+        # Doctrine one-to-many & many-to-one relationships
         $entityManager = $this->getDoctrine()->getManager();
+        
+        #/ Insert data user including video
         $user = new User();
-        $user->setName('Samrud');
+        $user->setName('Joko');
+
+        for($i=1; $i<=3; $i++)
+        {
+            $video = new Video();
+            $video->setTitle('Video title -'. $i);
+            $user->addVideo($video);
+            $entityManager->persist($video);
+        }
+
         $entityManager->persist($user);
         $entityManager->flush();
+
+        dump('Created a video with id of '. $video->getId());
+        dump('Created a video with id of '. $user->getId());
+
+        #/ Read data user by id video
+        $video = $this->getDoctrine()
+        ->getRepository(Video::class)
+        ->find(1);
+        dump($video->getUser()->getName());
+
+        #/ Read data video by id user
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(1);
+
+        foreach($user->getVideos() as $video)
+        {
+            dump($video->getTitle());
+        }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
