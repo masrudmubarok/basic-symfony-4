@@ -2,28 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User
 {
+
     /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        $this->createdAt = new \DateTime();
-        dump($this->createdAt);
-    }
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -34,8 +25,7 @@ class User
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="user",
-     * cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="user",orphanRemoval=true)
      */
     private $videos;
 
@@ -81,7 +71,8 @@ class User
 
     public function removeVideo(Video $video): self
     {
-        if ($this->videos->removeElement($video)) {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
             // set the owning side to null (unless already changed)
             if ($video->getUser() === $this) {
                 $video->setUser(null);
@@ -90,4 +81,6 @@ class User
 
         return $this;
     }
+
 }
+

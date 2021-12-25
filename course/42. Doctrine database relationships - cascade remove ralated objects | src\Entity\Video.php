@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=VideoRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
 class Video
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -23,8 +22,8 @@ class Video
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="videos")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="videos")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 
@@ -57,3 +56,4 @@ class Video
         return $this;
     }
 }
+

@@ -205,41 +205,67 @@ class DefaultController extends AbstractController
 
         
         # Doctrine one-to-many & many-to-one relationships
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
 
         #/ Insert data user including video
-        $user = new User();
-        $user->setName('Joko');
+        // $user = new User();
+        // $user->setName('Joko');
 
-        for($i=1; $i<=3; $i++)
-        {
-            $video = new Video();
-            $video->setTitle('Video title -'. $i);
-            $user->addVideo($video);
-            $entityManager->persist($video);
-        }
+        // for($i=1; $i<=3; $i++)
+        // {
+        //     $video = new Video();
+        //     $video->setTitle('Video title -'. $i);
+        //     $user->addVideo($video);
+        //     $entityManager->persist($video);
+        // }
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        // $entityManager->persist($user);
+        // $entityManager->flush();
 
-        dump('Created a video with id of '. $video->getId());
-        dump('Created a video with id of '. $user->getId());
+        // dump('Created a video with id of '. $video->getId());
+        // dump('Created a video with id of '. $user->getId());
 
         #/ Read data user by id video
-        $video = $this->getDoctrine()
-        ->getRepository(Video::class)
-        ->find(1);
-        dump($video->getUser()->getName());
+        // $video = $this->getDoctrine()
+        // ->getRepository(Video::class)
+        // ->find(1);
+        // dump($video->getUser()->getName());
 
-        #/ Read data video by id user
+        // #/ Read data video by id user
+        // $user = $this->getDoctrine()
+        // ->getRepository(User::class)
+        // ->find(1);
+
+        // foreach($user->getVideos() as $video)
+        // {
+        //     dump($video->getTitle());
+        // }
+
+
+        # Doctrine database relationships - cascade remove ralated objects
+        $entityManager = $this->getDoctrine()->getManager();
+
+        #/ Delete user data test
         $user = $this->getDoctrine()
         ->getRepository(User::class)
         ->find(1);
+
+        $video = $this->getDoctrine()
+        ->getRepository(Video::class)
+        ->find(1);
+
+        $user->removeVideo($video);
+        $entityManager->flush();
 
         foreach($user->getVideos() as $video)
         {
             dump($video->getTitle());
         }
+
+        // $entityManager->remove($user);
+        // $entityManager->flush();
+
+        // dump($user);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
