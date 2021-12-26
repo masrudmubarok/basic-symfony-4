@@ -7,6 +7,7 @@ use App\Entity\Video;
 use App\Entity\Address;
 use App\Services\GiftsService;
 use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -287,34 +288,56 @@ class DefaultController extends AbstractController
 
 
         # Doctrine many-to-many relationship
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
 
         #/ Add batch users
-        for ($i = 1; $i <= 4; $i++)
-        {
-            $user = new User();
-            $user->setName('Masrud - '. $i);
-            $entityManager->persist($user);
-        }
-        $entityManager->flush();
-        dump('Last user id - '. $user->getId());
+        // for ($i = 1; $i <= 4; $i++)
+        // {
+        //     $user = new User();
+        //     $user->setName('Masrud - '. $i);
+        //     $entityManager->persist($user);
+        // }
+        // $entityManager->flush();
+        // dump('Last user id - '. $user->getId());
 
         #/ Add following users
-        $user1 = $entityManager->getRepository(User::class)->find(1);
-        $user2 = $entityManager->getRepository(User::class)->find(2);
-        $user3 = $entityManager->getRepository(User::class)->find(3);
-        $user4 = $entityManager->getRepository(User::class)->find(4);
+        // $user1 = $entityManager->getRepository(User::class)->find(1);
+        // $user2 = $entityManager->getRepository(User::class)->find(2);
+        // $user3 = $entityManager->getRepository(User::class)->find(3);
+        // $user4 = $entityManager->getRepository(User::class)->find(4);
 
-        $user1->addFollowed($user2);
-        $user1->addFollowed($user3);
-        $user1->addFollowed($user4);
-        $entityManager->flush();
+        // $user1->addFollowed($user2);
+        // $user1->addFollowed($user3);
+        // $user1->addFollowed($user4);
+        // $entityManager->flush();
 
         #/ Check followed/following users
-        dump($user1->getFollowed()->count());
-        dump($user1->getFollowing()->count());
-        dump($user4->getFollowing()->count());
+        // dump($user1->getFollowed()->count());
+        // dump($user1->getFollowing()->count());
+        // dump($user4->getFollowing()->count());
 
+
+        # Doctrine Query Builder & eager loading
+        $entityManager = $this->getDoctrine()->getManager();
+
+        #/ Adding user with videos
+        $user = new User();
+        $user->setName('Mubarok');
+
+        for ($i = 1; $i <= 3; $i++)
+        {
+            $video = new Video();
+            $video->setTitle('Video title - '. $i);
+            $user->addVideo($video);
+            $entityManager->persist($video);
+        }
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        #/ Check user with videos
+        $user = $entityManager->getRepository(User::class)->findWithVideos(1);
+        dump($user);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
