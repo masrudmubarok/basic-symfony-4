@@ -270,20 +270,51 @@ class DefaultController extends AbstractController
 
 
         # Doctrine one-to-one relationship
+        // $entityManager = $this->getDoctrine()->getManager();
+
+        // $user = new User();
+        // $user->setName('Mubarok');
+        // $address = new Address();
+        // $address->setStreet('Jl Mangga');
+        // $address->setNumber(22);
+        // $user->setAddress($address);
+
+        // $entityManager->persist($user);
+        // $entityManager->persist($address); // required, if `cascade: persist` is not set
+        // $entityManager->flush();
+
+        // dump($user->getAddress()->getStreet());
+
+
+        # Doctrine many-to-many relationship
         $entityManager = $this->getDoctrine()->getManager();
 
-        $user = new User();
-        $user->setName('Mubarok');
-        $address = new Address();
-        $address->setStreet('Jl Mangga');
-        $address->setNumber(22);
-        $user->setAddress($address);
+        #/ Add batch users
+        for ($i = 1; $i <= 4; $i++)
+        {
+            $user = new User();
+            $user->setName('Masrud - '. $i);
+            $entityManager->persist($user);
+        }
+        $entityManager->flush();
+        dump('Last user id - '. $user->getId());
 
-        $entityManager->persist($user);
-        // $entityManager->persist($address); // required, if `cascade: persist` is not set
+        #/ Add following users
+        $user1 = $entityManager->getRepository(User::class)->find(1);
+        $user2 = $entityManager->getRepository(User::class)->find(2);
+        $user3 = $entityManager->getRepository(User::class)->find(3);
+        $user4 = $entityManager->getRepository(User::class)->find(4);
+
+        $user1->addFollowed($user2);
+        $user1->addFollowed($user3);
+        $user1->addFollowed($user4);
         $entityManager->flush();
 
-        dump($user->getAddress()->getStreet());
+        #/ Check followed/following users
+        dump($user1->getFollowed()->count());
+        dump($user1->getFollowing()->count());
+        dump($user4->getFollowing()->count());
+
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
