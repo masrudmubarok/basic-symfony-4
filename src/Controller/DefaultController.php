@@ -336,7 +336,7 @@ class DefaultController extends AbstractController
         $entityManager->flush();
 
         #/ Check user with videos
-        $user = $entityManager->getRepository(User::class)->findWithVideos(1);
+        $user = $entityManager->getRepository(User::class)->findWithVideos(6);
         dump($user);
 
         return $this->render('default/index.html.twig', [

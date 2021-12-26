@@ -22,13 +22,12 @@ class UserRepository extends ServiceEntityRepository
     public function findWithVideos($id): ?User
     {
         return $this->createQueryBuilder('u')
-        ->innerJoin('u.videos', 'v')
+        ->leftJoin('u.videos', 'v')
         ->addSelect('v') //  eager loading
         ->andWhere('u.id = :id')
         ->setParameter('id', $id)
         ->getQuery()
-        ->getOneOrNullResult()
-        ;
+        ->getOneOrNullResult();
     }
 
     // /**
