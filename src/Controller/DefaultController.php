@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Video;
+use App\Entity\Address;
 use App\Services\GiftsService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -243,29 +244,46 @@ class DefaultController extends AbstractController
 
 
         # Doctrine database relationships - cascade remove ralated objects
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
 
-        #/ Delete user data test
-        $user = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->find(1);
+        // #/ Delete user data test
+        // $user = $this->getDoctrine()
+        // ->getRepository(User::class)
+        // ->find(1);
 
-        $video = $this->getDoctrine()
-        ->getRepository(Video::class)
-        ->find(1);
+        // $video = $this->getDoctrine()
+        // ->getRepository(Video::class)
+        // ->find(1);
 
-        $user->removeVideo($video);
-        $entityManager->flush();
+        // $user->removeVideo($video);
+        // $entityManager->flush();
 
-        foreach($user->getVideos() as $video)
-        {
-            dump($video->getTitle());
-        }
+        // foreach($user->getVideos() as $video)
+        // {
+        //     dump($video->getTitle());
+        // }
 
         // $entityManager->remove($user);
         // $entityManager->flush();
 
         // dump($user);
+
+
+        # Doctrine one-to-one relationship
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $user = new User();
+        $user->setName('Mubarok');
+        $address = new Address();
+        $address->setStreet('Jl Mangga');
+        $address->setNumber(22);
+        $user->setAddress($address);
+
+        $entityManager->persist($user);
+        // $entityManager->persist($address); // required, if `cascade: persist` is not set
+        $entityManager->flush();
+
+        dump($user->getAddress()->getStreet());
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
