@@ -318,26 +318,30 @@ class DefaultController extends AbstractController
 
 
         # Doctrine Query Builder & eager loading
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
 
         #/ Adding user with videos
-        $user = new User();
-        $user->setName('Mubarok');
+        // $user = new User();
+        // $user->setName('Mubarok');
 
-        for ($i = 1; $i <= 3; $i++)
-        {
-            $video = new Video();
-            $video->setTitle('Video title - '. $i);
-            $user->addVideo($video);
-            $entityManager->persist($video);
-        }
+        // for ($i = 1; $i <= 3; $i++)
+        // {
+        //     $video = new Video();
+        //     $video->setTitle('Video title - '. $i);
+        //     $user->addVideo($video);
+        //     $entityManager->persist($video);
+        // }
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        // $entityManager->persist($user);
+        // $entityManager->flush();
 
         #/ Check user with videos
-        $user = $entityManager->getRepository(User::class)->findWithVideos(6);
-        dump($user);
+        // $user = $entityManager->getRepository(User::class)->findWithVideos(6);
+        // dump($user);
+
+
+        # Doctrine table inheritance mapping in Symfony (polymorphic queries)
+        
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
