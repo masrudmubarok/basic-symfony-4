@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Author;
+use App\Entity\File;
+use App\Entity\Pdf;
 use App\Entity\Video;
 use App\Entity\Address;
 use App\Services\GiftsService;
@@ -341,7 +344,29 @@ class DefaultController extends AbstractController
 
 
         # Doctrine table inheritance mapping in Symfony (polymorphic queries)
+        $entityManager = $this->getDoctrine()->getManager();
         
+        #/ Load Pdf data
+        $pdf = $entityManager->getRepository(Pdf::class)->findAll();
+        dump($pdf);
+
+        #/ Load Video data
+        $video = $entityManager->getRepository(Video::class)->findAll();
+        dump($video);
+
+        #/ Load File data (Pdf and Video)
+        $file = $entityManager->getRepository(File::class)->findAll();
+        dump($file);
+
+        #/ Load Author with any Files data (Pdf and Video)
+        $author = $entityManager->getRepository(Author::class)->findByIdWithPdf(1);
+        dump($author);
+
+        foreach($author->getFiles() as $files)
+        {
+            # if($files instanceof Pdf) // withe spesific file type
+            dump($files->getFileName());
+        }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',

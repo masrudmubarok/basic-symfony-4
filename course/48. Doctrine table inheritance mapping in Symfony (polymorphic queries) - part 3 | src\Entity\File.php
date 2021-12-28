@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=FileRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\FileRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"video" = "Video", "pdf" = "Pdf"})
@@ -14,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class File
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -36,7 +35,7 @@ abstract class File
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="files")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="files")
      */
     private $author;
 
@@ -93,3 +92,4 @@ abstract class File
         return $this;
     }
 }
+

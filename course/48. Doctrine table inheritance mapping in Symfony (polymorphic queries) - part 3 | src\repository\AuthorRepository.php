@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Author;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Author|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AuthorRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Author::class);
     }
@@ -26,7 +26,7 @@ class AuthorRepository extends ServiceEntityRepository
              ->setParameter('id', $id)
              ->innerJoin('a.files', 'f')
              ->andWhere('f INSTANCE OF App\Entity\Pdf')
-             ->addSelect('f')
+            //  ->addSelect('f')
              ->getQuery()
              ->getOneOrNullResult()
              ;
@@ -61,3 +61,4 @@ class AuthorRepository extends ServiceEntityRepository
     }
     */
 }
+
