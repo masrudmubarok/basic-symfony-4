@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Services\MyService;
 
 class DefaultController extends AbstractController
 {
@@ -40,7 +41,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/home", name="default", name="home")
      */
-    public function index(GiftsService $gifts, SessionInterface $session, Request $request)
+    public function index(GiftsService $gifts, SessionInterface $session, Request $request, MyService $service)
     {
         # Users array
         // $users = ['Masrud','Mubarok'];
@@ -344,29 +345,29 @@ class DefaultController extends AbstractController
 
 
         # Doctrine table inheritance mapping in Symfony (polymorphic queries)
-        $entityManager = $this->getDoctrine()->getManager();
+        // $entityManager = $this->getDoctrine()->getManager();
         
         #/ Load Pdf data
-        $pdf = $entityManager->getRepository(Pdf::class)->findAll();
-        dump($pdf);
+        // $pdf = $entityManager->getRepository(Pdf::class)->findAll();
+        // dump($pdf);
 
         #/ Load Video data
-        $video = $entityManager->getRepository(Video::class)->findAll();
-        dump($video);
+        // $video = $entityManager->getRepository(Video::class)->findAll();
+        // dump($video);
 
         #/ Load File data (Pdf and Video)
-        $file = $entityManager->getRepository(File::class)->findAll();
-        dump($file);
+        // $file = $entityManager->getRepository(File::class)->findAll();
+        // dump($file);
 
         #/ Load Author with any Files data (Pdf and Video)
-        $author = $entityManager->getRepository(Author::class)->findByIdWithPdf(1);
-        dump($author);
+        // $author = $entityManager->getRepository(Author::class)->findByIdWithPdf(1);
+        // dump($author);
 
-        foreach($author->getFiles() as $files)
-        {
-            # if($files instanceof Pdf) // withe spesific file type
-            dump($files->getFileName());
-        }
+        // foreach($author->getFiles() as $files)
+        // {
+        //     # if($files instanceof Pdf) // withe spesific file type
+        //     dump($files->getFileName());
+        // }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
